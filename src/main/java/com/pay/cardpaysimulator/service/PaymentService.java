@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -82,5 +84,54 @@ public class PaymentService {
                 .status(TransactionStatus.FAILED)
                 .message(message)
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Transaction> getTransactionById(Long transactionId) {
+        return transactionRepository.findById(transactionId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transaction> getTransactionsByCardNumber(String cardNumber) {
+        return transactionRepository.findByCardCardNumber(cardNumber);
+    }
+
+    @Transactional
+    public PaymentResponse processRefund(Long transactionId) {
+        try {
+            Transaction transaction = transactionRepository.findById(transactionId)
+                    .orElseThrow(() -> new IllegalArgumentException("Transaction not found"));
+
+            if (transaction.getStatus() != TransactionStatus.APPROVED) {
+                return createDeclinedResponse("Cannot refund a non-approved transaction");
+            }
+
+            Card card = transaction.getCard();
+            card.setBalance(card.getBalance().add(transaction.getAmount()));
+            cardRepository.save(card);
+
+            transaction.setStatus(TransactionStatus.REFUNDED);
+            transactionRepository.save(transaction);
+
+            return PaymentResponse.builder()
+                    .status(TransactionStatus.REFUNDED)
+                    .message("Refund processed successfully")
+                    .transactionId(transaction.getId())
+                    .build();
+
+        } catch (Exception e) {
+            return createFailedResponse("Refund processing failed: " + e.getMessage());
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<String> getTransactionStatus(Long transactionId) {
+        return transactionRepository.findById(transactionId)
+                .map(transaction -> transaction.getStatus().name());
     }
 } 

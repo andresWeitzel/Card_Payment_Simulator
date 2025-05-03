@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findByCardId(Long cardId);
+    List<Transaction> findByCardCardNumber(String cardNumber);
 } 
