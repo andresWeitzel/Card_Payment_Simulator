@@ -1,3 +1,11 @@
+<div align = "center">
+  <img src="./src/main/resources/static/img/card-pay-simulator.png" >
+</div>
+
+<br>
+
+<br>
+
 # Card Payment Simulator
 
 A Spring Boot application that simulates card payment processing with various test scenarios. This project provides a RESTful API for testing different payment card scenarios including approvals, declines, processing errors, and more.
