@@ -2,7 +2,15 @@
   <img src="./src/main/resources/static/img/card-pay-simulator.png" >
 </div>
 
-<br>
+  <div align="right">
+    <img width="24" height="24" src="./src/main/resources/static/icons/backend/java/png/java.png" />
+    <img width="20" height="20" src="./src/main/resources/static/icons/devops/png/maven.png" />
+    <img width="22" height="22" src="./src/main/resources/static/icons/devops/png/postman.png" />
+    <img width="22" height="22" src="./src/main/resources/static/icons/devops/png/git.png" />
+    <img width="20" height="20" src="./src/main/resources/static/icons/backend/java/png/junit.png" />
+    <img width="20" height="20" src="./src/main/resources/static/icons/devops/png/swagger.png" />
+    <img width="20" height="20" src="./src/main/resources/static/icons/backend/java/png/spring-boot.png" />   
+  </div>  
 
 <br>
 
