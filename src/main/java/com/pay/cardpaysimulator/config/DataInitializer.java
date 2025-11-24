@@ -1,8 +1,8 @@
 package com.pay.cardpaysimulator.config;
 
 import com.pay.cardpaysimulator.model.Card;
-import com.pay.cardpaysimulator.model.CardStatus;
-import com.pay.cardpaysimulator.model.ScenarioType;
+import com.pay.cardpaysimulator.enums.CardStatus;
+import com.pay.cardpaysimulator.enums.ScenarioType;
 import com.pay.cardpaysimulator.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

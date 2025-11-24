@@ -1,4 +1,4 @@
-package com.pay.cardpaysimulator.model;
+package com.pay.cardpaysimulator.enums;
 
 public enum TransactionStatus {
     PENDING,
@@ -6,4 +6,5 @@ public enum TransactionStatus {
     DECLINED,
     FAILED,
     REFUNDED
-} 
+}
+

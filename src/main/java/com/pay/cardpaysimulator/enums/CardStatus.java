@@ -1,4 +1,4 @@
-package com.pay.cardpaysimulator.model;
+package com.pay.cardpaysimulator.enums;
 
 public enum CardStatus {
     ACTIVE,
@@ -7,5 +7,4 @@ public enum CardStatus {
     LOST,
     TEST
 }
-
 

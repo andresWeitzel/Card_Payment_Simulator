@@ -1,5 +1,6 @@
 package com.pay.cardpaysimulator.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = false)
 public class UpdateBalanceRequest {
     @NotNull(message = "Balance is required")
     @DecimalMin(value = "0.0", message = "Balance must be greater than or equal to 0")

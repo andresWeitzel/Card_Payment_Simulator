@@ -1,7 +1,8 @@
 package com.pay.cardpaysimulator.service;
 
 import com.pay.cardpaysimulator.model.Card;
-import com.pay.cardpaysimulator.model.ScenarioType;
+import com.pay.cardpaysimulator.enums.CardStatus;
+import com.pay.cardpaysimulator.enums.ScenarioType;
 import com.pay.cardpaysimulator.repository.CardRepository;
 import com.pay.cardpaysimulator.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -192,7 +193,7 @@ public class CardTestService {
                 .cvv(cvv)
                 .balance(balance)
                 .processingRule(scenario)
-                .status(com.pay.cardpaysimulator.model.CardStatus.TEST)
+                .status(CardStatus.TEST)
                 .countryCode(countryCode)
                 .currency(currency)
                 .dailyLimitAmount(new BigDecimal("5000.00"))

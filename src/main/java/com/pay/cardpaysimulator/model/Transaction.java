@@ -1,5 +1,6 @@
 package com.pay.cardpaysimulator.model;
 
+import com.pay.cardpaysimulator.enums.TransactionStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;

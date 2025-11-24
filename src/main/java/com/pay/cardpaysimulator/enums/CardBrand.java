@@ -1,4 +1,4 @@
-package com.pay.cardpaysimulator.model;
+package com.pay.cardpaysimulator.enums;
 
 public enum CardBrand {
     VISA,
@@ -6,5 +6,4 @@ public enum CardBrand {
     AMEX,
     DISCOVER
 }
-
 

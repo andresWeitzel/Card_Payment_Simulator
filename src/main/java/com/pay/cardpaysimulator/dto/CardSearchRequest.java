@@ -1,6 +1,6 @@
 package com.pay.cardpaysimulator.dto;
 
-import com.pay.cardpaysimulator.model.CardStatus;
+import com.pay.cardpaysimulator.enums.CardStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

@@ -1,8 +1,8 @@
 package com.pay.cardpaysimulator.repository;
 
 import com.pay.cardpaysimulator.model.Card;
-import com.pay.cardpaysimulator.model.CardBrand;
-import com.pay.cardpaysimulator.model.CardStatus;
+import com.pay.cardpaysimulator.enums.CardBrand;
+import com.pay.cardpaysimulator.enums.CardStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.Optional;

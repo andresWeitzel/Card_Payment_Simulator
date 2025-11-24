@@ -1,5 +1,6 @@
 package com.pay.cardpaysimulator.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -9,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = false)
 public class UpdateAvsRequest {
     @Size(max = 255, message = "AVS address line 1 must not exceed 255 characters")
     @Schema(description = "AVS address line 1", example = "123 Main Street")

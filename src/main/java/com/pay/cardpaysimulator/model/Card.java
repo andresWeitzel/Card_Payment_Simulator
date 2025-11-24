@@ -1,5 +1,8 @@
 package com.pay.cardpaysimulator.model;
 
+import com.pay.cardpaysimulator.enums.CardBrand;
+import com.pay.cardpaysimulator.enums.CardStatus;
+import com.pay.cardpaysimulator.enums.ScenarioType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;

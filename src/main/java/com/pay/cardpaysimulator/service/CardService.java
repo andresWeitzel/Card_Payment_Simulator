@@ -1,8 +1,8 @@
 package com.pay.cardpaysimulator.service;
 
 import com.pay.cardpaysimulator.model.Card;
-import com.pay.cardpaysimulator.model.CardBrand;
-import com.pay.cardpaysimulator.model.CardStatus;
+import com.pay.cardpaysimulator.enums.CardBrand;
+import com.pay.cardpaysimulator.enums.CardStatus;
 import com.pay.cardpaysimulator.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,10 +20,7 @@ public class CardService {
 
     private final CardRepository cardRepository;
 
-    @Transactional
-    public Card createCard(Card card) {
-        return cardRepository.save(card);
-    }
+    // ==================== GET METHODS ====================
 
     @Transactional(readOnly = true)
     public List<Card> getAllCards() {
@@ -33,43 +30,6 @@ public class CardService {
     @Transactional(readOnly = true)
     public Optional<Card> getByCardNumber(String cardNumber) {
         return cardRepository.findByCardNumber(cardNumber);
-    }
-
-    @Transactional
-    public Optional<Card> updateCard(String cardNumber, Card updatedCard) {
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(existingCard -> {
-                    updatedCard.setId(existingCard.getId());
-                    return cardRepository.save(updatedCard);
-                });
-    }
-
-    @Transactional
-    public Optional<Card> updateStatus(String cardNumber, CardStatus status) {
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(card -> {
-                    card.setStatus(status);
-                    return cardRepository.save(card);
-                });
-    }
-
-    @Transactional
-    public Optional<Card> updateBalance(String cardNumber, BigDecimal balance) {
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(card -> {
-                    card.setBalance(balance);
-                    return cardRepository.save(card);
-                });
-    }
-
-    @Transactional
-    public boolean deleteCard(String cardNumber) {
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(card -> {
-                    cardRepository.delete(card);
-                    return true;
-                })
-                .orElse(false);
     }
 
     @Transactional(readOnly = true)
@@ -82,17 +42,6 @@ public class CardService {
         return cardRepository.findByBrand(brand);
     }
 
-    @Transactional
-    public Optional<Card> blockCard(String cardNumber) {
-        return updateStatus(cardNumber, CardStatus.BLOCKED);
-    }
-
-    @Transactional
-    public Optional<Card> unblockCard(String cardNumber) {
-        return updateStatus(cardNumber, CardStatus.ACTIVE);
-    }
-
-    // Search methods
     @Transactional(readOnly = true)
     public List<Card> getByBin(String bin) {
         return cardRepository.findByBin(bin);
@@ -140,7 +89,83 @@ public class CardService {
         return cardRepository.findAll(spec);
     }
 
-    // Update methods for specific fields
+    // ==================== POST METHODS ====================
+
+    @Transactional
+    public Card createCard(Card card) {
+        return cardRepository.save(card);
+    }
+
+    @Transactional
+    public Optional<Card> blockCard(String cardNumber) {
+        return updateStatus(cardNumber, CardStatus.BLOCKED);
+    }
+
+    @Transactional
+    public Optional<Card> unblockCard(String cardNumber) {
+        return updateStatus(cardNumber, CardStatus.ACTIVE);
+    }
+
+    @Transactional
+    public Optional<Card> incrementFailedCvvAttempts(String cardNumber) {
+        return cardRepository.findByCardNumber(cardNumber)
+                .map(card -> {
+                    card.setFailedCvvAttempts(card.getFailedCvvAttempts() + 1);
+                    card.setLastFailedAttemptAt(LocalDateTime.now());
+                    return cardRepository.save(card);
+                });
+    }
+
+    @Transactional
+    public Optional<Card> resetFailedCvvAttempts(String cardNumber) {
+        return cardRepository.findByCardNumber(cardNumber)
+                .map(card -> {
+                    card.setFailedCvvAttempts(0);
+                    card.setLastFailedAttemptAt(null);
+                    return cardRepository.save(card);
+                });
+    }
+
+    @Transactional
+    public Optional<Card> updateLastUsedAt(String cardNumber) {
+        return cardRepository.findByCardNumber(cardNumber)
+                .map(card -> {
+                    card.setLastUsedAt(LocalDateTime.now());
+                    return cardRepository.save(card);
+                });
+    }
+
+    // ==================== PUT METHODS ====================
+
+    @Transactional
+    public Optional<Card> updateCard(String cardNumber, Card updatedCard) {
+        return cardRepository.findByCardNumber(cardNumber)
+                .map(existingCard -> {
+                    updatedCard.setId(existingCard.getId());
+                    return cardRepository.save(updatedCard);
+                });
+    }
+
+    // ==================== PATCH METHODS ====================
+
+    @Transactional
+    public Optional<Card> updateStatus(String cardNumber, CardStatus status) {
+        return cardRepository.findByCardNumber(cardNumber)
+                .map(card -> {
+                    card.setStatus(status);
+                    return cardRepository.save(card);
+                });
+    }
+
+    @Transactional
+    public Optional<Card> updateBalance(String cardNumber, BigDecimal balance) {
+        return cardRepository.findByCardNumber(cardNumber)
+                .map(card -> {
+                    card.setBalance(balance);
+                    return cardRepository.save(card);
+                });
+    }
+
     @Transactional
     public Optional<Card> updateDailyLimits(String cardNumber, BigDecimal dailyLimitAmount, Integer dailyLimitCount) {
         return cardRepository.findByCardNumber(cardNumber)
@@ -201,34 +226,15 @@ public class CardService {
                 });
     }
 
-    @Transactional
-    public Optional<Card> incrementFailedCvvAttempts(String cardNumber) {
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(card -> {
-                    card.setFailedCvvAttempts(card.getFailedCvvAttempts() + 1);
-                    card.setLastFailedAttemptAt(LocalDateTime.now());
-                    return cardRepository.save(card);
-                });
-    }
+    // ==================== DELETE METHODS ====================
 
     @Transactional
-    public Optional<Card> resetFailedCvvAttempts(String cardNumber) {
+    public boolean deleteCard(String cardNumber) {
         return cardRepository.findByCardNumber(cardNumber)
                 .map(card -> {
-                    card.setFailedCvvAttempts(0);
-                    card.setLastFailedAttemptAt(null);
-                    return cardRepository.save(card);
-                });
-    }
-
-    @Transactional
-    public Optional<Card> updateLastUsedAt(String cardNumber) {
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(card -> {
-                    card.setLastUsedAt(LocalDateTime.now());
-                    return cardRepository.save(card);
-                });
+                    cardRepository.delete(card);
+                    return true;
+                })
+                .orElse(false);
     }
 }
-
-

@@ -10,6 +10,7 @@ public class ApiResponseCards {
     // Common error responses - 400 Bad Request
     public static final String ERROR_400_INVALID_CARD_DETAILS = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid card details\"\n}";
     public static final String ERROR_400_INVALID_STATUS = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid status\"\n}";
+    public static final String ERROR_400_INVALID_STATUS_VALUE = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid status. Valid values are: ACTIVE, BLOCKED, STOLEN, LOST, TEST\"\n}";
     public static final String ERROR_400_INVALID_BALANCE = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid balance\"\n}";
     public static final String ERROR_400_INVALID_BRAND = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid brand\"\n}";
     public static final String ERROR_400_INVALID_DAILY_LIMITS = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid daily limits\"\n}";
@@ -18,6 +19,13 @@ public class ApiResponseCards {
     public static final String ERROR_400_INVALID_NOTES = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid notes\"\n}";
     public static final String ERROR_400_INVALID_PROCESSING_RULE_REASON = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid processing rule reason\"\n}";
     public static final String ERROR_400_INVALID_BRAND_VALUES = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Invalid brand. Valid values are: VISA, MASTERCARD, AMEX, DISCOVER\"\n}";
+    public static final String ERROR_400_EXTRA_FIELDS_NOT_ALLOWED = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Only the 'status' field is allowed in the request body\"\n}";
+    public static final String ERROR_400_EXTRA_FIELDS_NOT_ALLOWED_PROCESSING_RULE = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Only the 'processingRuleReason' field is allowed in the request body\"\n}";
+    public static final String ERROR_400_EXTRA_FIELDS_NOT_ALLOWED_NOTES = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Only the 'notes' field is allowed in the request body\"\n}";
+    public static final String ERROR_400_EXTRA_FIELDS_NOT_ALLOWED_DAILY_LIMITS = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Only the 'dailyLimitAmount' and/or 'dailyLimitCount' fields are allowed in the request body\"\n}";
+    public static final String ERROR_400_EXTRA_FIELDS_NOT_ALLOWED_CREDIT_LIMITS = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Only the 'creditLimit' and/or 'availableCredit' fields are allowed in the request body\"\n}";
+    public static final String ERROR_400_EXTRA_FIELDS_NOT_ALLOWED_BALANCE = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Only the 'balance' field is allowed in the request body\"\n}";
+    public static final String ERROR_400_EXTRA_FIELDS_NOT_ALLOWED_AVS = "{\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Only the 'avsAddressLine1' and/or 'avsPostalCode' fields are allowed in the request body\"\n}";
 
     // Common error responses - 404 Not Found
     public static final String ERROR_404_NOT_FOUND = "{\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Card not found\"\n}";
