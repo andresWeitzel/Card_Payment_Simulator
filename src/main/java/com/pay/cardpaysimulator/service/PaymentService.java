@@ -4,14 +4,14 @@ import com.pay.cardpaysimulator.dto.PaymentRequest;
 import com.pay.cardpaysimulator.dto.PaymentResponse;
 import com.pay.cardpaysimulator.model.Card;
 import com.pay.cardpaysimulator.model.Transaction;
-import com.pay.cardpaysimulator.model.TransactionStatus;
+import com.pay.cardpaysimulator.enums.TransactionStatus;
+import com.pay.cardpaysimulator.enums.ScenarioType;
 import com.pay.cardpaysimulator.repository.CardRepository;
 import com.pay.cardpaysimulator.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +29,22 @@ public class PaymentService {
         try {
             Card card = cardRepository.findByCardNumber(request.getCardNumber())
                     .orElseThrow(() -> new IllegalArgumentException("Card not found"));
+
+            // Scenario-based overrides for testing
+            ScenarioType scenario = card.getProcessingRule();
+            if (scenario != null) {
+                switch (scenario) {
+                    case DECLINE:
+                        return createDeclinedResponse("Payment declined (test rule)");
+                    case ERROR:
+                        throw new RuntimeException("Simulated processing error (test rule)");
+                    case APPROVAL:
+                        // proceed with normal validations (cards provisioned para aprobar)
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             if (isCardExpired(card.getExpirationDate())) {
                 return createDeclinedResponse("Card is expired");
